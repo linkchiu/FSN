@@ -7,4 +7,35 @@
   <span class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   </span>
+  <div onKeyPress="return checkSubmit(event)">
+  <%= form_with(model: [ micropost, micropost.comments.build ], local: true) do |form| %>
+
+    <p style="display: none">
+      <%= form.label :commenter %><br>
+      <%= form.text_field :commenter, value: current_user[:name] %>
+    </p>
+    <p>
+      <%= form.text_field :body %>
+    </p>
+    <p style="display: none">
+      <%= form.submit %>
+    </p>
+  <% end %>
+  </div>
+
+  <% micropost.comments.each do |comment| %>
+    <% if comment.body %>
+      <p>
+      <span><%= comment.commenter %>: </span> <span> <%= comment.body %></span>
+      </p>
+    <%end %>
+  <% end %>
 </li>
+
+<script>
+    function checkSubmit(e) {
+        if(e && e.keyCode == 13) {
+            document.forms[1].submit();
+        }
+    }
+</script>
