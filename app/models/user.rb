@@ -11,7 +11,7 @@ class User < ApplicationRecord
   	has_secure_password
 
 	def feed
-		Micropost.where("user_id = ?", id)
+		Micropost.where("user_id > 0")
 	end
 
 end
