@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    # return msg: render json: user, status: :created
+    # return msg: render json: @user, status: :created
     if @user.save
       reset_session
       log_in @user

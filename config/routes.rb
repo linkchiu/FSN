@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # get 'ninja/create'
   get 'sessions/new'
   get 'users/new'
   get 'welcome/index'
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   
   post '/login', to:'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  post '/ninjaaction', to: 'microposts#ninja'
 
   resources :users
   resources :microposts do

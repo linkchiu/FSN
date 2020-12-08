@@ -1,6 +1,20 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
+  # before_action :logged_in_user, only: [:create, :destroy]
+  skip_before_action :verify_authenticity_token
+
+
+  def ninja
+    @micropost = Micropost.new(micropost_params)
+    if @micropost.save
+      return "ok"
+    else
+      return "error"
+    end
+  end
+
   def create
+    @micropost = current_user.microposts.build(micropost_params)
+    # render plain: params[:micropost].inspect
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
     if @micropost.save
@@ -17,7 +31,7 @@ class MicropostsController < ApplicationController
 
   private
   def micropost_params
-    params.require(:micropost).permit(:content,:image)
+    params.require(:micropost).permit(:content,:image, :user_id)
   end
 
 end
